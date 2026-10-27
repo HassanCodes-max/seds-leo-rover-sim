@@ -1,0 +1,15 @@
+# colcon build output (if someone builds on a Linux host)
+build/
+install/
+log/
+
+# Verification output (CI uploads it as an artifact instead)
+proof/
+
+# Editor / OS clutter
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini

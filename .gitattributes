@@ -1,0 +1,5 @@
+# Force LF line endings so shell scripts run inside Linux containers even when
+# the repo is cloned on Windows.
+* text=auto eol=lf
+*.png binary
+*.jpg binary

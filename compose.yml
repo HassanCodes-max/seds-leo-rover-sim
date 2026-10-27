@@ -1,0 +1,36 @@
+# Leo Rover headless Gazebo simulation (ROS 2 Humble + Gazebo Fortress)
+# Start:  docker compose up --build
+# Stop:   Ctrl+C, then docker compose down
+services:
+  leo-sim:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: leo-rover-sim:humble
+    container_name: leo-sim
+    init: true               # clean shutdown of all ROS/Gazebo child processes
+    restart: "no"
+    shm_size: "1gb"          # DDS shared-memory transport + Gazebo rendering need more than Docker's 64 MB default
+    environment:
+      # Other teams' nodes (odometry, vision, ...) join by using the same ID.
+      ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-0}"
+      LIBGL_ALWAYS_SOFTWARE: "1"
+    # sim_world is passed straight to Gazebo as its command line:
+    #   -s                    server only, no GUI window (= headless)
+    #   -r                    start running immediately (a paused sim publishes no /odom)
+    #   --headless-rendering  render the camera without a display (EGL)
+    # Pick another world with e.g.  LEO_WORLD=marsyard2022 docker compose up
+    command:
+      - ros2
+      - launch
+      - leo_gz_bringup
+      - leo_gz.launch.py
+      - "sim_world:=-s -r --headless-rendering /ws/install/share/leo_gz_worlds/worlds/${LEO_WORLD:-leo_empty}.sdf"
+    healthcheck:
+      # Healthy only when a real /odom message arrives, not just when the topic exists.
+      # Goes through /entrypoint.sh because a healthcheck shell has no ROS loaded.
+      test: ["CMD", "/entrypoint.sh", "timeout", "20", "ros2", "topic", "echo", "--once", "/odom"]
+      interval: 15s
+      timeout: 30s
+      retries: 8
+      start_period: 40s
