@@ -66,6 +66,6 @@ Example: `LEO_WORLD=marsyard2022 docker compose up` (PowerShell: `$env:LEO_WORLD
 - Gazebo flags: `-s` = server only (headless), `-r` = start running immediately
   (a paused simulator publishes no `/odom`), `--headless-rendering` = the camera sensor renders without a display.
 - Rendering runs on the CPU (Mesa), so no GPU is needed. Small laptops will run the simulation slower than real time.
-  On a standard GitHub Actions runner (4 CPU, no GPU), `/odom` publishes at about 11 Hz.
+  On a standard GitHub Actions runner (4 CPU, no GPU), `/odom` publishes at about 9-11 Hz.
 - Source of the simulator: [LeoRover/leo_simulator-ros2](https://github.com/LeoRover/leo_simulator-ros2) (MIT),
   the same package as `03_Track2_Planetary_Rover_Arsenal/leorover-leo_simulator-ros2` in the Crucible Resource Package.

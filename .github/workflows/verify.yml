@@ -36,7 +36,7 @@ jobs:
 
       - name: Upload verification log
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: verify-log
           path: proof/verify.log
