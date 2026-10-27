@@ -49,6 +49,7 @@ docker compose exec leo-sim /entrypoint.sh ros2 topic pub --once /cmd_vel geomet
 | `scripts/entrypoint.sh` | Loads ROS and the built workspace, then runs the command |
 | `scripts/verify.sh` | Automated check: build, start, wait for `/odom`, record topics and rate in `proof/verify.log` |
 | `.github/workflows/verify.yml` | Runs `verify.sh` on a clean Ubuntu machine on every push |
+| `docs/HOW_IT_WORKS.md` | Walkthrough of the build, launch and message flow for newcomers |
 
 ## Options
 | Variable | Default | Effect |
