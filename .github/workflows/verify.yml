@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Validate compose.yml
         run: docker compose config --quiet
@@ -31,12 +31,12 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           grep -E '^RESULT' proof/verify.log | sed 's/^/::notice title=Result::/'
-          grep -E 'gazebo' proof/verify.log | head -2 | sed 's/^/::notice title=Gazebo process::/'
+          grep -E 'gazebo -s' proof/verify.log | head -1 | sed 's/^/::notice title=Gazebo process::/'
           grep -E '^/odom$|average rate' proof/verify.log | tr '\n' ' ' | sed 's/^/::notice title=odom::/'; echo
 
       - name: Upload verification log
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: verify-log
           path: proof/verify.log
