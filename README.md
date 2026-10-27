@@ -29,6 +29,13 @@ docker compose exec leo-sim /entrypoint.sh ros2 topic echo --once /odom
 docker compose exec leo-sim /entrypoint.sh ros2 topic hz /odom
 ```
 
+Or run every check at once. This saves the evidence to `proof/verify.log` and exits with code 0 on PASS:
+```bash
+bash scripts/verify.sh
+```
+The same script runs on GitHub Actions for every push (workflow **verify-sim**). Each run's log
+can be downloaded as the `verify-log` artifact.
+
 Drive the rover (optional; shows the simulation responds to commands):
 ```bash
 docker compose exec leo-sim /entrypoint.sh ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.3}}"
@@ -40,6 +47,8 @@ docker compose exec leo-sim /entrypoint.sh ros2 topic pub --once /cmd_vel geomet
 | `Dockerfile` | Starts from the official `ros:humble-ros-base-jammy` image, downloads the Leo simulator source (tag `1.1.2`), installs its dependencies with `rosdep` and builds it with `colcon` |
 | `compose.yml` | Runs `leo_gz.launch.py` headless (`-s -r --headless-rendering`) and defines the `/odom` health check |
 | `scripts/entrypoint.sh` | Loads ROS and the built workspace, then runs the command |
+| `scripts/verify.sh` | Automated check: build, start, wait for `/odom`, record topics and rate in `proof/verify.log` |
+| `.github/workflows/verify.yml` | Runs `verify.sh` on a clean Ubuntu machine on every push |
 
 ## Options
 | Variable | Default | Effect |
