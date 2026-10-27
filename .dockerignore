@@ -1,0 +1,9 @@
+# Only scripts/ is needed inside the image; keep the build context small.
+.git
+.github
+docs
+proof
+build
+install
+log
+*.md
