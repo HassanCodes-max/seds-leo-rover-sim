@@ -1,5 +1,7 @@
 # Leo Rover Simulation in Docker (ROS 2 Humble + Gazebo Fortress)
 
+[![verify-sim](https://github.com/HassanCodes-max/seds-leo-rover-sim/actions/workflows/verify.yml/badge.svg)](https://github.com/HassanCodes-max/seds-leo-rover-sim/actions/workflows/verify.yml)
+
 SEDS Pakistan, IST Chapter: task **SEDS-TASK-ROV-SRILANKA-001**
 Candidate: Hassan Ali, Pod 3A (Autonomous Navigation, Computer Vision & Systems Integration)
 
@@ -33,8 +35,9 @@ Or run every check at once. This saves the evidence to `proof/verify.log` and ex
 ```bash
 bash scripts/verify.sh
 ```
-The same script runs on GitHub Actions for every push (workflow **verify-sim**). Each run's log
-can be downloaded as the `verify-log` artifact.
+The same script runs on GitHub Actions for every push (workflow **verify-sim**, badge above).
+Open a run to see the evidence (Gazebo process, topic list, one `/odom` message, publish rate) in its
+summary. The full log can be downloaded as the `verify-log` artifact.
 
 Drive the rover (optional; shows the simulation responds to commands):
 ```bash
