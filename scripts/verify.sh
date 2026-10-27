@@ -31,7 +31,7 @@ for i in $(seq 1 40); do
 done
 
 say; say "--- 3. processes: Gazebo must run as server only (-s), no GUI"
-in_container bash -c "ps -eo args | grep -E 'gazebo' | grep -v grep" 2>&1 | tee -a "$LOG"
+in_container bash -c "ps -eo args | grep -E 'gazebo -s' | grep -v grep" 2>&1 | tee -a "$LOG"
 
 say; say "--- 4. ros2 topic list"
 in_container ros2 topic list 2>&1 | tee -a "$LOG"
