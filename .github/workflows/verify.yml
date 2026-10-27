@@ -21,6 +21,19 @@ jobs:
       - name: Build, start and check /odom
         run: bash scripts/verify.sh
 
+      - name: Show evidence on the run page
+        if: always()
+        run: |
+          {
+            echo '## Verification evidence'
+            echo '```'
+            cat proof/verify.log | head -150
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          grep -E '^RESULT' proof/verify.log | sed 's/^/::notice title=Result::/'
+          grep -E 'gazebo' proof/verify.log | head -2 | sed 's/^/::notice title=Gazebo process::/'
+          grep -E '^/odom$|average rate' proof/verify.log | tr '\n' ' ' | sed 's/^/::notice title=odom::/'; echo
+
       - name: Upload verification log
         if: always()
         uses: actions/upload-artifact@v4
